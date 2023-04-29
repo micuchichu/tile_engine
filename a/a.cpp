@@ -8,9 +8,8 @@
 
 #define KEY_INVALID 163
 
-#define TILE_NUM 10
+#define TILE_NUM 11
 #define BUT_NUM 3
-
 
 Vector2 mult(Vector2 a, Vector2 b)
 {
@@ -190,7 +189,7 @@ public:
 
 	const bool back() const
 	{
-		if (texture_index == 4 || texture_index == 7 || texture_index == 8 || texture_index == 9)
+		if (texture_index == 7 || texture_index == 8 || texture_index == 9)
 			return true;
 		else
 			return false;
@@ -247,7 +246,7 @@ public:
 
 	void setPos(Vector2 pos) { this->pos = pos; }
 	void setX(float x) { this->pos.x = x; }
-	void setY(float y) { this->pos.y = y - 8; }
+	void setY(float y) { this->pos.y = y; }
 
 	void setVel(Vector2 vel) { this->vel = vel; }
 
@@ -310,9 +309,6 @@ void solveCollision(Player& player, const Vector2& squarePos, float& beneathPlay
 		}
 		else if (minDistance == dyTop) 
 		{
-			//player.setPos({ playerPos.x, squareTop - playerHeight });
-			//player.setVel({ player.getVel().x, 0 });
-
 			beneathPlayer = squarePos.y - playerHeight;
 		}
 		else 
@@ -383,6 +379,7 @@ void Export(std::vector<Tile>& tiles)
 				}
 		}
 		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << std::endl;
+
 	}
 }
 
@@ -635,9 +632,13 @@ int main()
 
 		// Load World //
 		Import(tileMap);
-		for(auto tile : tileMap)
-			if(tile.getIndex() == 0)
-				player.setPos(tile.getPos());
+
+		// Spawn //
+		Vector2 spawn;
+		for (auto tile : tileMap)
+			if (tile.getIndex() == 10)
+				spawn = {tile.getPos().x, tile.getPos().y - 64};
+		player.setPos(spawn);
 
 		// Calculate Mesh //
 		CalculateMesh(tileMap, mesh);
@@ -660,6 +661,10 @@ int main()
 			// Pause //
 			if (IsKeyPressed(KEY_ESCAPE))
 				pause = !pause;
+
+			//Respawn
+			if (IsKeyPressed('R'))
+				player.setPos(spawn);
 
 			if (!pause)
 			{
@@ -692,7 +697,7 @@ int main()
 
 					// Jump //
 					if (IsKeyDown(' '))
-						player.ApplyForce({ 0, -510 }, 1);
+						player.ApplyForce({ 0, -502 }, 1);
 				}
 
 				// Friction //
