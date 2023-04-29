@@ -3,12 +3,14 @@
 #include <vector>
 #include <functional>
 #include <algorithm>
+#include <cmath>
 #include "raylib.h"
 
-#define BUILDER 0
+#define KEY_INVALID 163
 
 #define TILE_NUM 10
 #define BUT_NUM 3
+
 
 Vector2 mult(Vector2 a, Vector2 b)
 {
@@ -25,6 +27,11 @@ Vector2 sub(Vector2 a, Vector2 b)
 	return { a.x - b.x, a.y - b.y };
 }
 
+float length(Vector2 a)
+{
+	return sqrt(a.x * a.x + a.y * a.y);
+}
+
 struct Textures
 {
 	void initTextures()
@@ -37,7 +44,7 @@ struct Textures
 			strcat_s(file, num);
 			strcat_s(file, ".png");
 			tiles[i] = LoadTexture(file);
-		}
+		} 
 	}
 
 	Texture2D tiles[TILE_NUM];
@@ -181,6 +188,14 @@ public:
 		return pos;
 	}
 
+	const bool back() const
+	{
+		if (texture_index == 4 || texture_index == 7 || texture_index == 8 || texture_index == 9)
+			return true;
+		else
+			return false;
+	}
+
 	void DrawTile()
 	{
 		DrawTexture(textures.tiles[texture_index], pos.x, pos.y, RAYWHITE);
@@ -228,13 +243,27 @@ public:
 
 	const Vector2 getVel() const { return vel; }
 
+	void setCamOffset(Vector2 offset) { this->cam.offset = offset; }
+
 	void setPos(Vector2 pos) { this->pos = pos; }
+	void setX(float x) { this->pos.x = x; }
+	void setY(float y) { this->pos.y = y - 8; }
+
 	void setVel(Vector2 vel) { this->vel = vel; }
 
+	void initTexture() { texture = LoadTexture("./textures/player/player.png"); }
+
+	Texture2D getTexture() { return texture; }
+
+	void Draw()
+	{
+		DrawTextureEx(texture, pos, 0, 1, RAYWHITE);
+	}
 private:
 	Vector2 pos;
 	Vector2 vel;
 	Camera2D cam;
+	Texture2D texture;
 };
 
 bool compareTiles(const Tile& a, const Tile& b) 
@@ -246,46 +275,112 @@ bool compareVectors(const Vector2& a, const Vector2& b) {
 	return (a.x < b.x) || (a.x == b.x && a.y < b.y);
 }
 
-void CalculateMesh(std::vector<Tile> tileMap, std::vector<Vector2> &mesh)
+void solveCollision(Player& player, const Vector2& squarePos, float& beneathPlayer) 
 {
-	sort(tileMap.begin(), tileMap.end(), compareTiles);
+	const float squareSize = 64.0f;
+	const float playerWidth = player.getTexture().width;
+	const float playerHeight = player.getTexture().height;
+
+	float squareLeft = squarePos.x;
+	float squareRight = squarePos.x + squareSize;
+	float squareTop = squarePos.y;
+	float squareBottom = squarePos.y + squareSize;
+
+	Vector2 playerPos = player.getPos();
+
+	if (playerPos.x < squareRight && playerPos.x + playerWidth > squareLeft &&
+		playerPos.y < squareBottom && playerPos.y + playerHeight > squareTop) 
+	{
+		float dxLeft = std::abs(squareLeft - (playerPos.x + playerWidth));
+		float dxRight = std::abs(squareRight - playerPos.x);
+		float dyTop = std::abs(squareTop - (playerPos.y + playerHeight));
+		float dyBottom = std::abs(squareBottom - playerPos.y);
+
+		float minDistance = std::min({ dxLeft, dxRight, dyTop, dyBottom });
+
+		if (minDistance == dxLeft) 
+		{
+			player.setPos({ squareLeft - playerWidth, playerPos.y });
+			player.setVel({ 0, player.getVel().y });
+		}
+		else if (minDistance == dxRight)
+		{
+			player.setPos({ squareRight, playerPos.y });
+			player.setVel({ 0, player.getVel().y});
+		}
+		else if (minDistance == dyTop) 
+		{
+			//player.setPos({ playerPos.x, squareTop - playerHeight });
+			//player.setVel({ player.getVel().x, 0 });
+
+			beneathPlayer = squarePos.y - playerHeight;
+		}
+		else 
+		{
+			player.setPos({ playerPos.x, squareBottom });
+			player.setVel({ player.getVel().x, 0 });
+		}
+	}
+}
+
+void CalculateMesh(std::vector<Tile> tileMap, std::vector<Vector2> &mesh) 
+{
+	//sort(tileMap.begin(), tileMap.end(), compareTiles);
 	mesh.clear();
+	std::cout << tileMap.size() << std::endl;
 	for (const auto& tile : tileMap) 
 	{
-		float xp = tile.getPos().x + 64;
-		float xm = tile.getPos().x - 64;
-		float yp = tile.getPos().y + 64;
-		float ym = tile.getPos().y - 64;
+		if (tile.back())
+			continue;
+
+		Vector2 pos1 = tile.getPos();
+
+		float xp = pos1.x + 64;
+		float xm = pos1.x - 64;
+		float yp = pos1.y + 64;
+		float ym = pos1.y - 64;
 
 		int adjacent = 0;
 
 		for (const auto& tile2 : tileMap)
 		{
-			if(tile.getPos().x != tile2.getPos().x && tile.getPos().y != tile2.getPos().y)
-				if ((tile2.getPos().x == xp && tile2.getPos().y == yp) ||
-					(tile2.getPos().x == xp && tile2.getPos().y == ym) ||
-					(tile2.getPos().x == xm && tile2.getPos().y == yp) ||
-					(tile2.getPos().x == xm && tile2.getPos().y == ym))
-				{
-					adjacent++;
-				}
+			if (tile2.back())
+				continue;
+
+			Vector2 pos2 = tile2.getPos();
+
+			if ((pos2.x == pos1.x && pos2.y == ym) ||
+				(pos2.x == xp && pos2.y == pos1.y) ||
+				(pos2.x == pos1.x && pos2.y == yp) ||
+				(pos2.x == xm && pos2.y == pos1.y))
+			{
+				adjacent++;
+			}
+
+			if (adjacent == 4)
+				break;
 		}
-		if (adjacent < 4 && (tile.getIndex() != 4 && tile.getIndex() != 7 && tile.getIndex() != 8 && tile.getIndex() != 9))
+		if (adjacent < 4)
 			mesh.push_back(tile.getPos());
 	}
-	//sort(mesh.begin(), mesh.end(), compareVectors);
+}
+
+float Distance(Vector2 a, Vector2 b)
+{
+	return length(sub(a, b));
 }
 
 void Export(std::vector<Tile>& tiles)
 {
-	std::ofstream file("save.txt");
+	std::ofstream file("./saves/save.txt");
 	for (int i = 0; i < tiles.size(); i++)
 	{
-		for (int j = i + 1; j < tiles.size(); j++)
+		for (int j = 0; j < tiles.size(); j++)
 		{
-			if (tiles[i].getPos().x == tiles[j].getPos().x && tiles[i].getPos().y == tiles[j].getPos().y) {
-				tiles.erase(tiles.begin() + i);
-			}
+			if (i != j)
+				if (tiles[i].getPos().x == tiles[j].getPos().x && tiles[i].getPos().y == tiles[j].getPos().y) {
+					tiles.erase(tiles.begin() + j);
+				}
 		}
 		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << std::endl;
 	}
@@ -293,14 +388,26 @@ void Export(std::vector<Tile>& tiles)
 
 void Import(std::vector<Tile>& tiles)
 {
-	std::ifstream file("save.txt");
+	std::ifstream file("./saves/save.txt");
 	tiles.clear();
+
 	while(!file.eof())
 	{
 		int index, x, y;
 		file >> index >> x >> y;
 		Tile tile(index, Vector2{ (float)x, (float)y });
 		tiles.push_back(tile);
+	}
+
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		for (int j = 0; j < tiles.size(); j++)
+		{
+			if (i != j)
+				if (tiles[i].getPos().x == tiles[j].getPos().x && tiles[i].getPos().y == tiles[j].getPos().y) {
+					tiles.erase(tiles.begin() + j);
+				}
+		}
 	}
 }
 
@@ -312,11 +419,18 @@ void Delete(std::vector<Tile>& tiles)
 
 int main()
 {
-	if (BUILDER)
+	bool builder;
+
+	std::cout << "Editor (1/0): ";
+	std::cin >> builder;
+
+	// Level Editor //
+	if (builder)
 	{
 		// WINDOW //
 		SetWindowState(FLAG_WINDOW_RESIZABLE);
 		InitWindow(800, 600, "tile engine");
+		SetExitKey(KEY_INVALID);
 
 		// TEXTURES //
 		textures.initTextures();
@@ -462,8 +576,8 @@ int main()
 					mouseOver = true;*/
 			}
 
-			for (int i = 1; i < mesh.size(); i++)
-				DrawLine(mesh[i - 1].x, mesh[i - 1].y, mesh[i].x, mesh[i].y, GREEN);
+			for (int i = 0; i < mesh.size(); i++)
+				DrawRectangleLines(mesh[i].x, mesh[i].y, 64, 64, GREEN);
 
 			DrawTexture(textures.tiles[selected], xPlace, yPlace, { 245, 245, 245, 120 });
 
@@ -492,79 +606,119 @@ int main()
 
 		return 0;
 	}
+	
+	// Game Runner //
 	else
 	{
+		// Init Window //
 		SetWindowState(FLAG_WINDOW_RESIZABLE);
 		InitWindow(600, 600, "gam");
+		SetExitKey(KEY_INVALID);
 
+		// Screen Bounds //
 		int screenW = GetScreenWidth();
 		int screenH = GetScreenHeight();
+		bool pause = false;
 
+		// Initiate Player //
+		Player player;
+		player.setPos({ 0, 0 });
+		player.setCamOffset({ (float)screenW / 2, (float)screenH / 2 });
+
+		// Load Textures //
+		player.initTexture();
 		textures.initTextures();
 
+		// World and Mesh //
 		std::vector<Tile> tileMap;
 		std::vector<Vector2> mesh;
 
-		Player player;
-
+		// Load World //
 		Import(tileMap);
+		for(auto tile : tileMap)
+			if(tile.getIndex() == 0)
+				player.setPos(tile.getPos());
 
+		// Calculate Mesh //
 		CalculateMesh(tileMap, mesh);
 
+		// Game Loop //
 		while (!WindowShouldClose())
 		{
+			// Delta Time //
 			float dt = GetFrameTime();
-
+			
+			// Window Resized //
 			if (IsWindowResized())
 			{
+				pause = true;
 				screenW = GetScreenWidth();
 				screenH = GetScreenHeight();
+				player.setCamOffset({(float)screenW / 2, (float)screenH / 2});
 			}
 
-			if (abs(player.getVel().x) < 5000) {
-				if (IsKeyDown('A')) {
-					player.ApplyForce({ -1000, 0 }, dt);
-				}
-				if (IsKeyDown('D')) {
-					player.ApplyForce({ 1000, 0 }, dt);
-				}
-			}
+			// Pause //
+			if (IsKeyPressed(KEY_ESCAPE))
+				pause = !pause;
 
-			// Gravity //
-			for (int i = 0; i < mesh.size(); i++) 
+			if (!pause)
 			{
-				if (mesh[i].x > player.getPos().x - 32 && mesh[i].x < player.getPos().x + 32 && mesh[i].y < player.getPos().y + 128 && mesh[i].y > player.getPos().y)
+				float beneathPlayer = 704;
+
+				// Solve Collisions //
+				for (int i = 0; i < mesh.size(); i++)
+					solveCollision(player, mesh[i], beneathPlayer);
+
+				// Movement //
+				if (abs(player.getVel().x) < 5000)
 				{
-					if (player.getPos().y < mesh[i].y - 64)
-						player.ApplyForce({ 0, 980 }, dt);
-					// Ground //
-					else {
-						player.setPos({ player.getPos().x, mesh[i].y - 64});
+					if (IsKeyDown('A'))
+						player.ApplyForce({ -1000, 0 }, dt);
 
-						if (player.getVel().y > 0)
-							player.setVel({ player.getVel().x, 0 });
-
-						if (IsKeyDown(' '))
-						{
-							player.ApplyForce({ 0, -500 }, 1);
-						}
-					}
+					if (IsKeyDown('D'))
+						player.ApplyForce({ 1000, 0 }, dt);
 				}
+
+				// Gravity //
+				if (player.getPos().y < beneathPlayer)
+					player.ApplyForce({ 0, 980 }, dt);
+
+				// Ground //
+				else
+				{
+					player.setPos({ player.getPos().x, beneathPlayer });
+					if (player.getVel().y > 0)
+						player.setVel({ player.getVel().x, 0 });
+
+					// Jump //
+					if (IsKeyDown(' '))
+						player.ApplyForce({ 0, -510 }, 1);
+				}
+
+				// Friction //
+				player.ApplyForce(mult(player.getVel(), Vector2{ -0.75f, 0 }), dt);
+
+				// Update //
+				player.Update(dt);
 			}
-			
-			// Friction //
-			player.ApplyForce(mult(player.getVel(), Vector2{ -0.75f, 0 }), dt);
 
-			player.Update(dt);
-
+			// Render //
 			BeginDrawing();
 				ClearBackground(BLACK);
 				BeginMode2D(player.getCam());
+					// Draw Tiles //
 					for (int i = 0; i < tileMap.size(); i++)
 						tileMap[i].DrawTile();
+
+					// Draw Player //
+					player.Draw();
+					
+					// Draw Mesh //
+					//for (int i = 0; i < mesh.size(); i++)
+					//	DrawRectangleLines(mesh[i].x, mesh[i].y, 64, 64, GREEN);
 				EndMode2D();
-				DrawRectangle(screenW / 2, screenH / 2, 64, 128, RED);
-				DrawCircle(screenW / 2, screenH / 2, 10, BLUE);
+				if (pause)
+					DrawText("Game Paused", screenW / 2, 50, 20, WHITE);
 			EndDrawing();
 		}
 	}
