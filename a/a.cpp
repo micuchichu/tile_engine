@@ -81,8 +81,22 @@ public:
 		DrawTexture(texture, pos.x, pos.y, RAYWHITE);
 	}
 
+	void DrawButton(float size)
+	{
+		DrawTextureEx(texture, pos, 0, size, RAYWHITE);
+	}
+
 	void Clicked(Vector2 MousePos)
 	{
+		if (MousePos.x < pos.x + texture.width && MousePos.x > pos.x &&
+			MousePos.y < pos.y + texture.height && MousePos.y > pos.y)
+			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+				function_();
+	}
+
+	void Clicked()
+	{
+		Vector2 MousePos = GetMousePosition();
 		if (MousePos.x < pos.x + texture.width && MousePos.x > pos.x &&
 			MousePos.y < pos.y + texture.height && MousePos.y > pos.y)
 			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
@@ -93,7 +107,7 @@ private:
 	Texture2D texture;
 	Vector2 pos;
 	std::function<void()> function_;
-}buttons[BUT_NUM];
+};
 
 class UiTile
 {
@@ -250,7 +264,7 @@ public:
 
 	void setVel(Vector2 vel) { this->vel = vel; }
 
-	void initTexture() { texture = LoadTexture("./textures/player/player.png"); }
+	void initTexture() { texture = LoadTexture("./textures/player/player2.png"); }
 
 	Texture2D getTexture() { return texture; }
 
@@ -323,7 +337,7 @@ void CalculateMesh(std::vector<Tile> tileMap, std::vector<Vector2> &mesh)
 {
 	//sort(tileMap.begin(), tileMap.end(), compareTiles);
 	mesh.clear();
-	std::cout << tileMap.size() << std::endl;
+
 	for (const auto& tile : tileMap) 
 	{
 		if (tile.back())
@@ -428,6 +442,9 @@ int main()
 		SetWindowState(FLAG_WINDOW_RESIZABLE);
 		InitWindow(800, 600, "tile engine");
 		SetExitKey(KEY_INVALID);
+
+		// BUTTONS //
+		Button buttons[BUT_NUM];
 
 		// TEXTURES //
 		textures.initTextures();
@@ -615,11 +632,10 @@ int main()
 		// Screen Bounds //
 		int screenW = GetScreenWidth();
 		int screenH = GetScreenHeight();
-		bool pause = false;
+		bool pause = true;
 
 		// Initiate Player //
 		Player player;
-		player.setPos({ 0, 0 });
 		player.setCamOffset({ (float)screenW / 2, (float)screenH / 2 });
 
 		// Load Textures //
@@ -634,11 +650,20 @@ int main()
 		Import(tileMap);
 
 		// Spawn //
-		Vector2 spawn;
+		Vector2 spawn = {0, 0};
 		for (auto tile : tileMap)
 			if (tile.getIndex() == 10)
-				spawn = {tile.getPos().x, tile.getPos().y - 64};
+				spawn = {tile.getPos().x, tile.getPos().y - 128};
 		player.setPos(spawn);
+
+		// Buttons //
+		Button buttons[1];
+		buttons[0].setPos(10, 10);
+		buttons[0] = LoadTexture("./textures/buttons/respawn_button.png");
+
+		auto lambda1 = [&spawn, &player]() { player.setPos(spawn); };
+		std::function<void()> func1 = lambda1;
+		buttons[0].setFunc(func1);
 
 		// Calculate Mesh //
 		CalculateMesh(tileMap, mesh);
@@ -662,9 +687,9 @@ int main()
 			if (IsKeyPressed(KEY_ESCAPE))
 				pause = !pause;
 
-			//Respawn
-			if (IsKeyPressed('R'))
-				player.setPos(spawn);
+			// Buttons //
+			for (int i = 0; i < 1; i++)
+				buttons[i].Clicked(GetMousePosition());
 
 			if (!pause)
 			{
@@ -707,6 +732,9 @@ int main()
 				player.Update(dt);
 			}
 
+			if (IsKeyPressed('F'))
+				std::cout << GetFPS() << std::endl;
+
 			// Render //
 			BeginDrawing();
 				ClearBackground(BLACK);
@@ -722,8 +750,12 @@ int main()
 					//for (int i = 0; i < mesh.size(); i++)
 					//	DrawRectangleLines(mesh[i].x, mesh[i].y, 64, 64, GREEN);
 				EndMode2D();
+
+				buttons[0].DrawButton(0.5f);
+			
 				if (pause)
-					DrawText("Game Paused", screenW / 2, 50, 20, WHITE);
+					DrawText("Game Paused \nPress ESC to Unpause", screenW / 2, 50, 20, WHITE);
+
 			EndDrawing();
 		}
 	}
