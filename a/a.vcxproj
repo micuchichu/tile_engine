@@ -111,6 +111,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\nucit\Downloads\raylib-master\raylib-master\projects\VS2022\build\raylib\bin\x64\Release.DLL</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);raylib.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalOptions>-lstdc++fs %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,6 +131,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\nucit\Downloads\raylib-master\raylib-master\projects\VS2022\build\raylib\bin\x64\Release.DLL</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);raylib.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalOptions>-lstdc++fs %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -4,7 +4,10 @@
 #include <functional>
 #include <algorithm>
 #include <cmath>
+#include <filesystem>
 #include "raylib.h"
+
+//namespace fs = filesystem;
 
 #define KEY_INVALID 163
 
@@ -43,6 +46,20 @@ struct Textures
 			strcat_s(file, num);
 			strcat_s(file, ".png");
 			tiles[i] = LoadTexture(file);
+
+			//for (const auto& entry : filesystem::directory_iterator(path)) {
+
+			//	// Converting the path to const char * in the
+			//	// subsequent lines
+			//	std::filesystem::path outfilename = entry.path();
+			//	std::string outfilename_str = outfilename.string();
+			//	const char* path = outfilename_str.c_str();
+
+			//	// Testing whether the path points to a
+			//	// non-directory or not If it does, displays path
+			//	if (stat(path, &sb) == 0 && !(sb.st_mode & S_IFDIR))
+			//		std::cout << path << std::endl;
+			//}
 		} 
 	}
 
@@ -96,11 +113,7 @@ public:
 
 	void Clicked()
 	{
-		Vector2 MousePos = GetMousePosition();
-		if (MousePos.x < pos.x + texture.width && MousePos.x > pos.x &&
-			MousePos.y < pos.y + texture.height && MousePos.y > pos.y)
-			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-				function_();
+		Clicked(GetMousePosition());
 	}
 
 private:
@@ -653,7 +666,7 @@ int main()
 		Vector2 spawn = {0, 0};
 		for (auto tile : tileMap)
 			if (tile.getIndex() == 10)
-				spawn = {tile.getPos().x, tile.getPos().y - 128};
+				spawn = {tile.getPos().x, tile.getPos().y - player.getTexture().height};
 		player.setPos(spawn);
 
 		// Buttons //
