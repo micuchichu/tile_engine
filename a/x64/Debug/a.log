@@ -1,0 +1,20 @@
+﻿  a.cpp
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(81,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(81,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(214,56): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(214,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(294,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(294,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(295,48): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(295,27): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(594,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(594,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(596,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(596,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(605,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(605,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(608,119): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(608,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(610,119): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\tileEngine\a\a.cpp(610,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  a.vcxproj -> C:\Users\nucit\source\repos\tileEngine\x64\Debug\a.exe
