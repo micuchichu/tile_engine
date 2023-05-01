@@ -1,0 +1,11 @@
+air
+stone
+gold_ore
+grass
+wood
+dirt
+sand
+log
+cacat
+leaves
+spawn

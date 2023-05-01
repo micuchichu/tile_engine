@@ -140,9 +140,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp" />
+    <ClCompile Include="gui.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="gui.h" />
+    <ClInclude Include="headers.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="spawn.h" />
+    <ClInclude Include="textures.h" />
+    <ClInclude Include="tile.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
