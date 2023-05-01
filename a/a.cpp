@@ -7,11 +7,10 @@
 #include <filesystem>
 #include "raylib.h"
 
-//namespace fs = filesystem;
+namespace fs = std::filesystem;
 
 #define KEY_INVALID 163
 
-#define TILE_NUM 11
 #define BUT_NUM 3
 
 Vector2 mult(Vector2 a, Vector2 b)
@@ -38,32 +37,17 @@ struct Textures
 {
 	void initTextures()
 	{
-		for (int i = 0; i < TILE_NUM; i++)
+		std::string path = "./textures/tiles";
+
+		for (const auto& entry : fs::directory_iterator(path))
 		{
-			char num[3];
-			sprintf_s(num, "%d", i);
-			char file[32] = "textures/tiles/tile_";
-			strcat_s(file, num);
-			strcat_s(file, ".png");
-			tiles[i] = LoadTexture(file);
-
-			//for (const auto& entry : filesystem::directory_iterator(path)) {
-
-			//	// Converting the path to const char * in the
-			//	// subsequent lines
-			//	std::filesystem::path outfilename = entry.path();
-			//	std::string outfilename_str = outfilename.string();
-			//	const char* path = outfilename_str.c_str();
-
-			//	// Testing whether the path points to a
-			//	// non-directory or not If it does, displays path
-			//	if (stat(path, &sb) == 0 && !(sb.st_mode & S_IFDIR))
-			//		std::cout << path << std::endl;
-			//}
-		} 
+			std::string pth = entry.path().string();
+			tiles.push_back(LoadTexture(pth.c_str()));
+			std::cout << pth << std::endl;
+		}
 	}
-
-	Texture2D tiles[TILE_NUM];
+	
+	std::vector<Texture2D> tiles;
 }textures;
 
 class Button
@@ -135,7 +119,7 @@ public:
 	{
 		if (GetMousePosition().x < x + size && GetMousePosition().x > x
 			&& GetMousePosition().y < y + size && GetMousePosition().y > y)
-			return IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+			return IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 		return false;
 	}
 
@@ -277,13 +261,17 @@ public:
 
 	void setVel(Vector2 vel) { this->vel = vel; }
 
-	void initTexture() { texture = LoadTexture("./textures/player/player2.png"); }
+	void initTexture() { texture = LoadTexture("./textures/player/amogu.png"); }
 
-	Texture2D getTexture() { return texture; }
+	int getWidth() { return 64; }
+	Texture2D getTexture() { return this->texture; }
 
-	void Draw()
-	{
-		DrawTextureEx(texture, pos, 0, 1, RAYWHITE);
+	void Draw(int frame)
+	{		
+		Rectangle frameR = {64 * frame, 0, 64, 128};
+		frame = frame % (texture.width / 64);
+
+		DrawTextureRec(texture, frameR, pos, RAYWHITE);
 	}
 private:
 	Vector2 pos;
@@ -301,10 +289,11 @@ bool compareVectors(const Vector2& a, const Vector2& b) {
 	return (a.x < b.x) || (a.x == b.x && a.y < b.y);
 }
 
-void solveCollision(Player& player, const Vector2& squarePos, float& beneathPlayer) 
+void solveCollision(Player& player, const Tile &tile, float& beneathPlayer) 
 {
+	Vector2 squarePos = tile.getPos();
 	const float squareSize = 64.0f;
-	const float playerWidth = player.getTexture().width;
+	const float playerWidth = player.getWidth();
 	const float playerHeight = player.getTexture().height;
 
 	float squareLeft = squarePos.x;
@@ -346,7 +335,7 @@ void solveCollision(Player& player, const Vector2& squarePos, float& beneathPlay
 	}
 }
 
-void CalculateMesh(std::vector<Tile> tileMap, std::vector<Vector2> &mesh) 
+void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile> &mesh) 
 {
 	//sort(tileMap.begin(), tileMap.end(), compareTiles);
 	mesh.clear();
@@ -384,7 +373,7 @@ void CalculateMesh(std::vector<Tile> tileMap, std::vector<Vector2> &mesh)
 				break;
 		}
 		if (adjacent < 4)
-			mesh.push_back(tile.getPos());
+			mesh.push_back(tile);
 	}
 }
 
@@ -466,6 +455,10 @@ int main()
 		//buttons[2] = LoadTexture("textures/buttons/button_2.png");
 		//buttons[2] = LoadTexture("buttons/button_2.png");
 
+		const int TILE_NUM = textures.tiles.size();
+
+		std::cout << TILE_NUM << std::endl;
+
 		// CAM //
 		Camera2D cam;
 		cam.offset = { 0, 0 };
@@ -474,11 +467,11 @@ int main()
 		cam.zoom = 1;
 
 		// MESH //
-		std::vector<Vector2> mesh;
+		std::vector<Tile> mesh;
 
 		// TILES  //
 		std::vector<Tile> tileMap;
-		UiTile UiTiles[TILE_NUM];
+		UiTile* UiTiles = new UiTile[TILE_NUM];
 		for (int i = 0; i < TILE_NUM; i++)
 			UiTiles[i] = i;
 
@@ -503,6 +496,7 @@ int main()
 		//buttons[2].setFunc(func3);
 
 		// VARIABLES //
+		float uiOffset = 0;
 		int selected = 0;
 		bool uiClick = false;
 		bool mouseOver = false;
@@ -545,15 +539,18 @@ int main()
 			}*/
 
 			// UI //
-			for (int i = 0; i < TILE_NUM; i++) {
-				if (UiTiles[i].Clicked(GetScreenWidth() - 56, i * 64 + 16, 48)) {
+			for (int i = 0; i < TILE_NUM; i++) 
+			{
+				if (UiTiles[i].Clicked(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 48)) {
 					selected = UiTiles[i].getIndex();
-					uiClick = true;
 					break;
 				}
-				else
-					uiClick = false;
 			}
+
+			if (GetMousePosition().x >= GetScreenWidth() - 64 || GetMousePosition().y < 64)
+				uiClick = true;
+			else
+				uiClick = false;
 
 			// WORLD MOVE //
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
@@ -562,9 +559,13 @@ int main()
 			}
 
 			// ZOOM //
-			if (GetMouseWheelMove())
+			if (GetMouseWheelMove() && !uiClick)
 			{
 				cam.zoom += GetMouseWheelMove() * dt;
+			}
+			else if (uiClick)
+			{
+				uiOffset += GetMouseWheelMove();
 			}
 
 			mouseOver = false;
@@ -597,14 +598,11 @@ int main()
 			BeginMode2D(cam);
 			ClearBackground({ (unsigned char)(pixel.r - 4), (unsigned char)(pixel.g - 4), (unsigned char)(pixel.b - 4), pixel.a });
 
-			for (int i = 0; i < tileMap.size(); i++) {
+			for (int i = 0; i < tileMap.size(); i++) 
 				tileMap[i].DrawTile();
-				/*if (tileMap[i].MouseOver(textures.tiles[selected].width, textures.tiles[selected].height, MousePos))
-					mouseOver = true;*/
-			}
 
 			for (int i = 0; i < mesh.size(); i++)
-				DrawRectangleLines(mesh[i].x, mesh[i].y, 64, 64, GREEN);
+				DrawRectangleLines(mesh[i].getPos().x, mesh[i].getPos().y, 64, 64, GREEN);
 
 			DrawTexture(textures.tiles[selected], xPlace, yPlace, { 245, 245, 245, 120 });
 
@@ -614,13 +612,14 @@ int main()
 			DrawRectangle(GetScreenWidth() - 64, 0, 64, GetScreenHeight(), DARKGRAY);
 			DrawRectangle(0, 0, GetScreenWidth(), 48, DARKGRAY);
 
-			for (int i = 0; i < TILE_NUM; i++) {
-				UiTiles[i].DrawTile(GetScreenWidth() - 56, i * 64 + 16, 0.75f);
+			for (int i = 0; i < TILE_NUM; i++) 
+			{
+				UiTiles[i].DrawTile(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 0.75f);
 
-				if (UiTiles[i].MouseOver(GetScreenWidth() - 56, i * 64 + 16, 48))
-					DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, WHITE);
+				if (UiTiles[i].MouseOver(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 48))
+					DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, WHITE);
 				if (UiTiles[i].getIndex() == selected)
-					DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, GREEN);
+					DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, GREEN);
 			}
 
 			for (int i = 0; i < BUT_NUM; i++)
@@ -630,6 +629,8 @@ int main()
 
 			EndDrawing();
 		}
+
+		delete[] UiTiles;
 
 		return 0;
 	}
@@ -645,7 +646,10 @@ int main()
 		// Screen Bounds //
 		int screenW = GetScreenWidth();
 		int screenH = GetScreenHeight();
+
+		// Variables //
 		bool pause = true;
+		float frame;
 
 		// Initiate Player //
 		Player player;
@@ -657,7 +661,7 @@ int main()
 
 		// World and Mesh //
 		std::vector<Tile> tileMap;
-		std::vector<Vector2> mesh;
+		std::vector<Tile> mesh;
 
 		// Load World //
 		Import(tileMap);
@@ -716,10 +720,15 @@ int main()
 				if (abs(player.getVel().x) < 5000)
 				{
 					if (IsKeyDown('A'))
+					{
 						player.ApplyForce({ -1000, 0 }, dt);
-
+						frame += dt * player.getVel().x / 50;
+					}
 					if (IsKeyDown('D'))
+					{
 						player.ApplyForce({ 1000, 0 }, dt);
+						frame += dt * player.getVel().x / 50;
+					}
 				}
 
 				// Gravity //
@@ -757,7 +766,7 @@ int main()
 						tileMap[i].DrawTile();
 
 					// Draw Player //
-					player.Draw();
+					player.Draw(player.getPos().x / 32);
 					
 					// Draw Mesh //
 					//for (int i = 0; i < mesh.size(); i++)
