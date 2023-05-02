@@ -1,0 +1,3 @@
+2
+./textures/tiles/gold_ore.png
+1

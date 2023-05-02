@@ -48,7 +48,7 @@ const Vector2 Tile::getPos() const
 
 const bool Tile::back() const
 {
-	if (texture_index == 7 || texture_index == 8 || texture_index == 9)
+	if (texture_index == 7 || texture_index == 8 || texture_index == 6)
 		return true;
 	else
 		return false;

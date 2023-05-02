@@ -74,9 +74,8 @@ void Player::Draw()
 
 void Player::Draw(int frame)
 {
-	if(sgn(vel.x) - 1\
-		)
-	frame = texture.width - frame;
+	if(sgn(vel.x) - 1)
+		frame = texture.width - frame;
 	Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture.height};
 
 	DrawTextureRec(texture, frameR, pos, RAYWHITE);

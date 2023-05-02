@@ -19,8 +19,6 @@ int RunEditor()
 
 	const int TILE_NUM = textures.tiles.size();
 
-	std::cout << TILE_NUM << std::endl;
-
 	// CAM //
 	Camera2D cam;
 	cam.offset = { 0, 0 };
