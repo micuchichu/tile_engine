@@ -8,7 +8,7 @@ struct item
 {
     Texture2D texture;
     bool back;
-    float size;
+    int size;
 };
 
 struct Textures
