@@ -14,8 +14,7 @@ int RunEditor()
 	textures.initTextures();
 	buttons[0] = LoadTexture("textures/buttons/button_0.png");
 	buttons[1] = LoadTexture("textures/buttons/button_1.png");
-	//buttons[2] = LoadTexture("textures/buttons/button_2.png");
-	//buttons[2] = LoadTexture("buttons/button_2.png");
+	buttons[2] = LoadTexture("textures/buttons/refresh.png");
 
 	const int TILE_NUM = textures.tiles.size();
 
@@ -51,9 +50,9 @@ int RunEditor()
 	std::function<void()> func2 = lambda2;
 	buttons[1].setFunc(func2);
 
-	//auto lambda3 = [&tileMap, &mesh]() { CalculateMesh(tileMap, mesh); };
-	//std::function<void()> func3 = lambda3;
-	//buttons[2].setFunc(func3);
+	auto lambda3 = [&]() { textures.reload(); };
+	std::function<void()> func3 = lambda3;
+	buttons[2].setFunc(func3);
 
 	// VARIABLES //
 	float uiOffset = 0;
@@ -62,7 +61,7 @@ int RunEditor()
 	bool mouseOver = false;
 
 	// AIR COLOR //
-	Image image = LoadImageFromTexture(textures.tiles[0]);
+	Image image = LoadImageFromTexture(textures.tiles[0].texture);
 	Color* colors = LoadImageColors(image);
 	int index = (4 * image.width) + 4;
 	Color pixel = colors[index];
@@ -74,13 +73,13 @@ int RunEditor()
 		Vector2 MousePos = GetScreenToWorld2D(GetMousePosition(), cam);
 		float dt = GetFrameTime();
 
-		float xPlace = (float)((int)(MousePos.x / textures.tiles[selected].width) * textures.tiles[selected].width),
-			yPlace = (float)((int)(MousePos.y / textures.tiles[selected].height) * textures.tiles[selected].height);
+		float xPlace = (float)((int)(MousePos.x / Gtexture(selected).width) * Gtexture(selected).width),
+			yPlace = (float)((int)(MousePos.y / Gtexture(selected).height) * Gtexture(selected).height);
 
 		if (MousePos.x < 0)
-			xPlace -= textures.tiles[selected].width;
+			xPlace -= textures.tiles[selected].texture.width;
 		if (MousePos.y < 0)
-			yPlace -= textures.tiles[selected].height;
+			yPlace -= textures.tiles[selected].texture.height;
 
 		if (IsKeyPressed('M'))
 			CalculateMesh(tileMap, mesh);
@@ -127,13 +126,13 @@ int RunEditor()
 		if (selected == 0)
 			for (int i = 0; i < tileMap.size(); i++)
 			{
-				if (tileMap[i].Clicked(textures.tiles[selected].width, textures.tiles[selected].height, MousePos))
+				if (tileMap[i].Clicked(Gtexture(selected).width, Gtexture(selected).height, MousePos))
 					tileMap.erase(tileMap.begin() + i);
 			}
 		else
 			for (int i = 0; i < tileMap.size(); i++)
 			{
-				if (tileMap[i].Clicked(textures.tiles[selected].width, textures.tiles[selected].height, MousePos, mouseOver))
+				if (tileMap[i].Clicked(Gtexture(selected).width, Gtexture(selected).height, MousePos, mouseOver))
 					tileMap[i].setIndex(selected);
 			}
 
@@ -155,9 +154,9 @@ int RunEditor()
 			tileMap[i].DrawTile();
 
 		for (int i = 0; i < mesh.size(); i++)
-			DrawRectangleLines(mesh[i].getPos().x, mesh[i].getPos().y, 64, 64, GREEN);
+			DrawRectangleLines(mesh[i].getPos().x, mesh[i].getPos().y, Gsize(mesh[i].getIndex()), Gsize(mesh[i].getIndex()), GREEN);
 
-		DrawTexture(textures.tiles[selected], xPlace, yPlace, { 245, 245, 245, 120 });
+		DrawTexture(Gtexture(selected), xPlace, yPlace, {245, 245, 245, 120});
 
 		EndMode2D();
 
@@ -170,9 +169,9 @@ int RunEditor()
 			UiTiles[i].DrawTile(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 0.75f);
 
 			if (UiTiles[i].MouseOver(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 48))
-				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, WHITE);
+				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, Gtexture(i).width * 0.75f, Gtexture(i).height * 0.75f, WHITE);
 			if (UiTiles[i].getIndex() == selected)
-				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, textures.tiles[i].width * 0.75f, textures.tiles[i].height * 0.75f, GREEN);
+				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, Gtexture(i).width * 0.75f, Gtexture(i).height * 0.75f, GREEN);
 		}
 
 		for (int i = 0; i < BUT_NUM; i++)

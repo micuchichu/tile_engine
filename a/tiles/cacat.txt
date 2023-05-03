@@ -1,3 +1,4 @@
 7
 ./textures/tiles/cacat.png
 1
+0.25

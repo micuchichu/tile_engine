@@ -48,18 +48,15 @@ const Vector2 Tile::getPos() const
 
 const bool Tile::back() const
 {
-	if (texture_index == 7 || texture_index == 8 || texture_index == 6)
-		return true;
-	else
-		return false;
+	return textures.tiles[texture_index].back;
 }
 
 void Tile::DrawTile()
 {
-	DrawTexture(textures.tiles[texture_index], pos.x, pos.y, RAYWHITE);
+	DrawTexture(Gtexture(texture_index), pos.x, pos.y, RAYWHITE);
 }
 
 void Tile::DrawTile(float scale)
 {
-	DrawTextureEx(textures.tiles[texture_index], pos, 0, scale, RAYWHITE);
+	DrawTextureEx(Gtexture(texture_index), pos, 0, scale, RAYWHITE);
 }

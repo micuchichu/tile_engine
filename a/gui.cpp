@@ -63,10 +63,10 @@ const int UiTile::getIndex() const
 
 void UiTile::DrawTile(int x, int y)
 {
-	DrawTexture(textures.tiles[texture_index], x, y, RAYWHITE);
+	DrawTexture(Gtexture(texture_index), x, y, RAYWHITE);
 }
 
 void UiTile::DrawTile(float x, float y, float scale)
 {
-	DrawTextureEx(textures.tiles[texture_index], { x, y }, 0, scale, RAYWHITE);
+	DrawTextureEx(Gtexture(texture_index), { x, y }, 0, scale, RAYWHITE);
 }
