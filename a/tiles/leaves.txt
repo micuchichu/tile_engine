@@ -1,4 +1,0 @@
-8
-./textures/tiles/leaves.png
-1
-2
