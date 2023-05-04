@@ -183,6 +183,7 @@ int RunEditor()
 	}
 
 	delete[] UiTiles;
+	textures.unload();
 
 	return 0;
 }
@@ -325,5 +326,8 @@ int RunGame()
 
 		EndDrawing();
 	}
+
+	textures.unload();
+
 	return 0;
 }

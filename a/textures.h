@@ -29,7 +29,7 @@ struct Textures
             std::ifstream file(entry.path());
             int index;
             std::string texture;
-            bool back;
+            bool back = 0;
             float size = 1;
             file >> index >> texture >> back >> size;
             
@@ -51,9 +51,15 @@ struct Textures
     // Reload //
     void reload()
     {
+        unload();
+        initTextures();
+    }
+
+    // Unload //
+    void unload()
+    {
         for (int i = 0; i < tiles.size(); i++)
             UnloadTexture(tiles[i].texture);
-        initTextures();
     }
 
     std::map<int, item> tiles;
