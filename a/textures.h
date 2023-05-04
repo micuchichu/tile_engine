@@ -23,7 +23,7 @@ struct Textures
     // Initialize Textures //
     void initTextures()
     {
-        std::string path = "./tiles/";
+        std::string path = "./properties/";
         for (const auto& entry : fs::directory_iterator(path))
         {
             std::ifstream file(entry.path());

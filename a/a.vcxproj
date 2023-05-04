@@ -163,6 +163,21 @@
     <ClInclude Include="tile.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\tileEngine\a\tiles\air.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\bagpula.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\cacat.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\dirt.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\gold_ore.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\grass.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\leaves.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\log.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\player.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\sand.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\spawn.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\stone.txt" />
+    <Text Include="..\..\..\tileEngine\a\tiles\wood.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
