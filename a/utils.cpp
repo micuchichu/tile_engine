@@ -25,14 +25,15 @@ float length(Vector2 a)
 void solveCollision(Player& player, const Tile& tile, float& beneathPlayer)
 {
 	Vector2 squarePos = tile.getPos();
-	const float squareSize = Gsize(tile.getIndex());
+	const float squareSizeX = Gsize(tile.getIndex()).x;
+	const float squareSizeY = Gsize(tile.getIndex()).y;
 	const float playerWidth = player.getWidth();
 	const float playerHeight = player.getTexture().height;
 
 	float squareLeft = squarePos.x;
-	float squareRight = squarePos.x + squareSize;
+	float squareRight = squarePos.x + squareSizeX;
 	float squareTop = squarePos.y;
-	float squareBottom = squarePos.y + squareSize;
+	float squareBottom = squarePos.y + squareSizeY;
 
 	Vector2 playerPos = player.getPos();
 
@@ -80,12 +81,12 @@ void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh)
 
 		Vector2 pos1 = tile.getPos();
 
-		int size = Gsize(tile.getIndex());
+		vec2i size = Gsize(tile.getIndex());
 
-		float xp = pos1.x + size;
-		float xm = pos1.x - size;
-		float yp = pos1.y + size;
-		float ym = pos1.y - size;
+		float xp = pos1.x + size.x;
+		float xm = pos1.x - size.x;
+		float yp = pos1.y + size.y;
+		float ym = pos1.y - size.y;
 
 		int adjacent = 0;
 

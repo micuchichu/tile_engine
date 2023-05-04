@@ -154,7 +154,7 @@ int RunEditor()
 			tileMap[i].DrawTile();
 
 		for (int i = 0; i < mesh.size(); i++)
-			DrawRectangleLines(mesh[i].getPos().x, mesh[i].getPos().y, Gsize(mesh[i].getIndex()), Gsize(mesh[i].getIndex()), GREEN);
+			DrawRectangleLines(mesh[i].getPos().x, mesh[i].getPos().y, Gsize(mesh[i].getIndex()).x, Gsize(mesh[i].getIndex()).y, GREEN);
 
 		DrawTexture(Gtexture(selected), xPlace, yPlace, {245, 245, 245, 120});
 
@@ -168,7 +168,7 @@ int RunEditor()
 		{
 			UiTiles[i].DrawTile(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 0.75f);
 
-			if (UiTiles[i].MouseOver(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, 48))
+			if (UiTiles[i].MouseOver(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, Gsize(i) * 0.75f))
 				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, Gtexture(i).width * 0.75f, Gtexture(i).height * 0.75f, WHITE);
 			if (UiTiles[i].getIndex() == selected)
 				DrawRectangleLines(GetScreenWidth() - 56, i * 64 + 16 + uiOffset, Gtexture(i).width * 0.75f, Gtexture(i).height * 0.75f, GREEN);

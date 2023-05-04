@@ -49,6 +49,10 @@ public:
 
 	bool MouseOver(int x, int y, int size);
 
+	bool Clicked(int x, int y, vec2i size);
+
+	bool MouseOver(int x, int y, vec2i size);
+
 	const int getIndex() const;
 
 	void DrawTile(int x, int y);

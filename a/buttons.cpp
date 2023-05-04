@@ -12,8 +12,8 @@ void Export(std::vector<Tile>& tiles)
 					tiles.erase(tiles.begin() + j);
 				}
 		}
-		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << std::endl;
 
+		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << std::endl;
 	}
 }
 

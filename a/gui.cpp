@@ -56,6 +56,22 @@ bool UiTile::MouseOver(int x, int y, int size)
 	return false;
 }
 
+bool UiTile::Clicked(int x, int y, vec2i size)
+{
+	if (GetMousePosition().x < x + size.x && GetMousePosition().x > x
+		&& GetMousePosition().y < y + size.y && GetMousePosition().y > y)
+		return IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+	return false;
+}
+
+bool UiTile::MouseOver(int x, int y, vec2i size)
+{
+	if (GetMousePosition().x < x + size.x && GetMousePosition().x > x
+		&& GetMousePosition().y < y + size.y && GetMousePosition().y > y)
+		return true;
+	return false;
+}
+
 const int UiTile::getIndex() const
 {
 	return UiTile::texture_index;

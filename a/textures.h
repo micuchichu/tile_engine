@@ -4,11 +4,18 @@
 
 namespace fs = std::filesystem;
 
+struct vec2i
+{
+    int x, y;
+
+    vec2i operator * (float n) { return { (int)(x * n), (int)(y * n) }; }
+};
+
 struct item
 {
     Texture2D texture;
     bool back;
-    int size;
+    vec2i size;
 };
 
 struct Textures
@@ -25,11 +32,17 @@ struct Textures
             bool back;
             float size = 1;
             file >> index >> texture >> back >> size;
+            
             tiles[index].texture = LoadTexture(texture.c_str());
             tiles[index].back = back;
-            tiles[index].size = size * tiles[index].texture.width;
+            tiles[index].size.x = size * tiles[index].texture.width;
+            tiles[index].size.y = size * tiles[index].texture.height;
+
+            std::cout << size << std::endl;
+            std::cout << entry.path() << std::endl;
+
             Image img = LoadImageFromTexture(tiles[index].texture);
-            ImageResize(&img, size * tiles[index].texture.width, size * tiles[index].texture.height);
+            ImageResize(&img, tiles[index].size.x, tiles[index].size.y);
             tiles[index].texture = LoadTextureFromImage(img);
             UnloadImage(img);
         }
