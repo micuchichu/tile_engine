@@ -1,9 +1,15 @@
 #pragma once
-#include "headers.h"
+
 #include "player.h"
+#include "headers.h"
 #include "tile.h"
 
 #define KEY_INVALID 163
+
+// Mesh related functions //
+void solveCollision(Player& player, const Tile& tile, float& beneathPlayer);
+
+void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh);
 
 // Vector2 Related Functions //
 Vector2 mult(Vector2 a, Vector2 b);
@@ -14,10 +20,9 @@ Vector2 sub(Vector2 a, Vector2 b);
 
 float length(Vector2 a);
 
-// Mesh related functions //
-void solveCollision(Player& player, const Tile& tile, float& beneathPlayer);
+float sgn(float n);
 
-void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh);
+Vector2 norm(Vector2 a);
 
 // Misc //
 float Distance(Vector2 a, Vector2 b);

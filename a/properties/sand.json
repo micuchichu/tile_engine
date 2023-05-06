@@ -1,0 +1,6 @@
+{
+  "id": 9,
+  "texture_path": "./textures/tiles/sand.png",
+  "background": false,
+  "size": 1
+}

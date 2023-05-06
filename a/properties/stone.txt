@@ -1,3 +1,0 @@
-1
-./textures/tiles/stone.png
-0

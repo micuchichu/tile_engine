@@ -1,25 +1,5 @@
 #include "player.h"
-
-float sgn(float n)
-{
-	if (n < 0)
-		return -1;
-	else
-		return 1;
-}
-
-Vector2 norm(Vector2 a)
-{
-	float length = std::sqrt(a.x * a.x + a.y * a.y);
-	if (abs(length) < 1.0f)
-	{
-		a.x /= length;
-		a.y /= length;
-	}
-	else
-		return { sgn(a.x), sgn(a.y)};
-	return a;
-}
+#include "utils.h"
 
 Player::Player()
 {
@@ -52,7 +32,7 @@ const Camera2D Player::getCam() const { return cam; }
 
 const int Player::getWidth() const { return 64; }
 
-const Texture2D Player::getTexture() const { return this->texture; }
+const Texture2D Player::getTexture() const { return this->texture_walk; }
 
 void Player::setPos(Vector2 pos) { this->pos = pos; }
 void Player::setX(float x) { this->pos.x = x; }
@@ -64,19 +44,34 @@ void Player::setCamOffset(Vector2 offset) { this->cam.offset = offset; }
 
 void Player::initTexture() 
 { 
-	texture = LoadTexture("./textures/player/amogu.png"); 
+	texture_walk = LoadTexture("./textures/player/mogu_walk.png");
+	texture_idle = LoadTexture("./textures/player/mogu_idle.png");
+	texture_jump = LoadTexture("./textures/player/mogu_jump.png");
 }
 
 void Player::Draw()
 {
-	DrawTextureV(texture, pos, RAYWHITE);
+	DrawTextureV(texture_idle, pos, RAYWHITE);
 }
 
 void Player::Draw(int frame)
 {
-	if(sgn(vel.x) - 1)
-		frame = texture.width - frame;
-	Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture.height};
+	if (vel.y < 0)
+	{
+		if (sgn(vel.y) - 1)
+			frame = texture_jump.width - frame;
+		Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture_jump.height };
 
-	DrawTextureRec(texture, frameR, pos, RAYWHITE);
+		DrawTextureRec(texture_jump, frameR, pos, RAYWHITE);
+	}
+	else if (abs(vel.x) > 10)
+	{
+		if (sgn(vel.x) - 1)
+			frame = texture_walk.width - frame;
+		Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture_walk.height };
+
+		DrawTextureRec(texture_walk, frameR, pos, RAYWHITE);
+	}
+	else
+		DrawTextureV(texture_idle, pos, RAYWHITE);
 }

@@ -1,0 +1,6 @@
+{
+  "id": 12,
+  "texture_path": "./textures/tiles/bagpula.png",
+  "background": true,
+  "size": 16
+}

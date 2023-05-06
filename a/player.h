@@ -1,4 +1,5 @@
 #pragma once
+
 #include "headers.h"
 #include "textures.h"
 #include "globals.h"
@@ -40,5 +41,7 @@ private:
 	Vector2 pos;
 	Vector2 vel;
 	Camera2D cam;
-	Texture2D texture;
+	Texture2D texture_walk;
+	Texture2D texture_idle;
+	Texture2D texture_jump;
 };

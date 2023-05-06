@@ -1,3 +1,0 @@
-5
-./textures/tiles/dirt.png
-0

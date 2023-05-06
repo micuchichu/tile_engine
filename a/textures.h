@@ -1,8 +1,9 @@
 #pragma once
-
+#include "rapidjson/document.h"
 #include "headers.h"
 
 namespace fs = std::filesystem;
+namespace json = rapidjson;
 
 struct vec2i
 {
@@ -27,19 +28,27 @@ struct Textures
         for (const auto& entry : fs::directory_iterator(path))
         {
             std::ifstream file(entry.path());
+
+            std::string file_contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+            json::Document doc;
+            doc.Parse(file_contents.c_str());
+
             int index;
             std::string texture;
             bool back = 0;
             float size = 1;
-            file >> index >> texture >> back >> size;
+            
+            index = doc["id"].GetInt();
+            std::cout << index << std::endl;
+            texture = doc["texture_path"].GetString();
+            back = doc["background"].GetBool();
+            size = doc["size"].GetFloat();
             
             tiles[index].texture = LoadTexture(texture.c_str());
             tiles[index].back = back;
             tiles[index].size.x = size * tiles[index].texture.width;
             tiles[index].size.y = size * tiles[index].texture.height;
-
-            std::cout << size << std::endl;
-            std::cout << entry.path() << std::endl;
 
             Image img = LoadImageFromTexture(tiles[index].texture);
             ImageResize(&img, tiles[index].size.x, tiles[index].size.y);

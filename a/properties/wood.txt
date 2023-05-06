@@ -1,3 +1,0 @@
-4
-./textures/tiles/wood.png
-0

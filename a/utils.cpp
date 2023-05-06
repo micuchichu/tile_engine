@@ -1,26 +1,5 @@
 #include "utils.h"
 
-// Vector2 Related Functions //
-Vector2 mult(Vector2 a, Vector2 b)
-{
-	return { a.x * b.x, a.y * b.y };
-}
-
-Vector2 scale(Vector2 a, float b)
-{
-	return { a.x * b, a.y * b };
-}
-
-Vector2 sub(Vector2 a, Vector2 b)
-{
-	return { a.x - b.x, a.y - b.y };
-}
-
-float length(Vector2 a)
-{
-	return sqrt(a.x * a.x + a.y * a.y);
-}
-
 // Mesh related functions //
 void solveCollision(Player& player, const Tile& tile, float& beneathPlayer)
 {
@@ -111,6 +90,48 @@ void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh)
 		if (adjacent < 4)
 			mesh.push_back(tile);
 	}
+}
+
+// Vector2 Related Functions //
+Vector2 mult(Vector2 a, Vector2 b)
+{
+	return { a.x * b.x, a.y * b.y };
+}
+
+Vector2 scale(Vector2 a, float b)
+{
+	return { a.x * b, a.y * b };
+}
+
+Vector2 sub(Vector2 a, Vector2 b)
+{
+	return { a.x - b.x, a.y - b.y };
+}
+
+float length(Vector2 a)
+{
+	return sqrt(a.x * a.x + a.y * a.y);
+}
+
+float sgn(float n)
+{
+	if (n < 0)
+		return -1;
+	else
+		return 1;
+}
+
+Vector2 norm(Vector2 a)
+{
+	float length = std::sqrt(a.x * a.x + a.y * a.y);
+	if (abs(length) < 1.0f)
+	{
+		a.x /= length;
+		a.y /= length;
+	}
+	else
+		return { sgn(a.x), sgn(a.y) };
+	return a;
 }
 
 // Misc //

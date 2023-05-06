@@ -73,6 +73,12 @@ int RunEditor()
 		Vector2 MousePos = GetScreenToWorld2D(GetMousePosition(), cam);
 		float dt = GetFrameTime();
 
+		if (IsWindowResized())
+		{
+			cam.offset.x = GetScreenWidth() * 0.5f;
+			cam.offset.y = GetScreenHeight() * 0.5f;
+		}
+
 		float xPlace = (float)((int)(MousePos.x / Gtexture(selected).width) * Gtexture(selected).width),
 			yPlace = (float)((int)(MousePos.y / Gtexture(selected).height) * Gtexture(selected).height);
 
@@ -113,7 +119,7 @@ int RunEditor()
 		// ZOOM //
 		if (GetMouseWheelMove() && !uiClick)
 		{
-			cam.zoom += GetMouseWheelMove() * dt;
+			cam.zoom += GetMouseWheelMove() / 30;
 		}
 		else if (uiClick)
 		{
