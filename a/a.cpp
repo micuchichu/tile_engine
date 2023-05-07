@@ -10,7 +10,13 @@ int main()
 	std::cin >> builder;
 
 	if (builder)
-		RunEditor();
+	{
+		Editor editor;
+		editor.Run();
+	}
 	else
-		RunGame();
+	{
+		Level level;
+		level.Run();
+	}
 }

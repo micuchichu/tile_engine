@@ -34,7 +34,7 @@ struct Textures
             json::Document doc;
             doc.Parse(file_contents.c_str());
 
-            int index;
+            uint64_t index;
             std::string texture;
             bool back = 0;
             float size = 1;
@@ -67,9 +67,9 @@ struct Textures
     // Unload //
     void unload()
     {
-        for (int i = 0; i < tiles.size(); i++)
+        for (uint64_t i = 0; i < tiles.size(); i++)
             UnloadTexture(tiles[i].texture);
     }
 
-    std::map<int, item> tiles;
+    std::map<uint64_t, item> tiles;
 };

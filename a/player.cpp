@@ -58,6 +58,7 @@ void Player::Draw(int frame)
 {
 	if (vel.y < 0)
 	{
+		frame = pos.y / 64;
 		if (sgn(vel.y) - 1)
 			frame = texture_jump.width - frame;
 		Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture_jump.height };

@@ -30,3 +30,5 @@ float Distance(Vector2 a, Vector2 b);
 bool compareTiles(const Tile& a, const Tile& b);
 
 bool compareVectors(const Vector2& a, const Vector2& b);
+
+void Window();

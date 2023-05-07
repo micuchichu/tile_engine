@@ -92,6 +92,9 @@
     <ClInclude Include="delete.h">
       <Filter>Header Files\buttons</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\raylib\src\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\tileEngine\a\properties\sand.txt">

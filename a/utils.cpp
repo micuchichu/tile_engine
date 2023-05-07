@@ -148,3 +148,10 @@ bool compareTiles(const Tile& a, const Tile& b)
 bool compareVectors(const Vector2& a, const Vector2& b) {
 	return (a.x < b.x) || (a.x == b.x && a.y < b.y);
 }
+
+void Window()
+{
+	SetWindowState(FLAG_WINDOW_RESIZABLE);
+	InitWindow(600, 600, "gam");
+	SetExitKey(KEY_INVALID);
+};

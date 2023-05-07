@@ -12,7 +12,7 @@ void Button::setPos(int x, int y)
 }
 
 void Button::setFunc(std::function<void()> func) {
-	function_ = std::bind(func);
+	function_ = func;
 }
 
 void Button::DrawButton()
