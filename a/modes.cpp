@@ -76,6 +76,8 @@ void Editor::CalculateColor()
 	pixel.r -= 4;
 	pixel.g -= 4;
 	pixel.b -= 4;
+	UnloadImage(image);
+	delete colors;
 }
 
 void Editor::Run()
@@ -86,7 +88,7 @@ void Editor::Run()
 
 		WindowUpdate();
 
-		KeyPressed();
+		KeysPressed();
 
 		Buttons();
 
@@ -105,8 +107,7 @@ void Editor::Run()
 		Render();
 	}
 
-	delete[] UiTiles;
-	textures.unload();
+	Unload();
 }
 
 void Editor::UpdateVars()
@@ -115,7 +116,7 @@ void Editor::UpdateVars()
 	dt = GetFrameTime();
 }
 
-void Editor::KeyPressed()
+void Editor::KeysPressed()
 {
 	if (IsKeyPressed('M'))
 		CalculateMesh(tileMap, mesh);
@@ -148,8 +149,8 @@ void Editor::CalcUi()
 void Editor::WorldMove()
 {
 	if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
-		cam.target.x -= GetMouseDelta().x;
-		cam.target.y -= GetMouseDelta().y;
+		cam.target.x -= GetMouseDelta().x / cam.zoom;
+		cam.target.y -= GetMouseDelta().y / cam.zoom;
 	}
 }
 
@@ -157,7 +158,7 @@ void Editor::Zoom()
 {
 	if (GetMouseWheelMove() && !uiClick)
 	{
-		cam.zoom += GetMouseWheelMove() / 30;
+		cam.zoom += GetMouseWheelMove() * cam.zoom / 10;
 	}
 	else if (uiClick)
 	{
@@ -246,6 +247,14 @@ void Editor::Render()
 	}
 
 	EndDrawing();
+}
+
+void Editor::Unload()
+{
+	textures.unload();
+	delete[] UiTiles;
+	for (int i = 0; i < BUT_NUM; i++)
+		buttons[i].Unload();
 }
 
 // Level Class //

@@ -176,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\nucit\rapidjson-master\include;C:\raylib\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\rapidjson-master\rapidjson-master\include;C:\raylib\raylib\src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -185,7 +185,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\raylib\src</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\raylib\raylib\src</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);raylib.lib;winmm.lib</AdditionalDependencies>
       <AdditionalOptions>-lstdc++fs %(AdditionalOptions)</AdditionalOptions>
       <PerUserRedirection>true</PerUserRedirection>
@@ -238,21 +238,6 @@
     <ClInclude Include="textures.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\tileEngine\a\properties\air.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\bagpula.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\cacat.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\dirt.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\gold_ore.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\grass.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\leaves.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\log.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\player.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\sand.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\spawn.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\stone.txt" />
-    <Text Include="..\..\..\tileEngine\a\properties\wood.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

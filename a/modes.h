@@ -31,7 +31,7 @@ public:
 
 	void UpdateVars();
 
-	void KeyPressed();
+	void KeysPressed();
 
 	void Buttons();
 
@@ -48,6 +48,8 @@ public:
 	void Place();
 
 	void Render();
+
+	void Unload();
 
 private:
 	float yPlace;

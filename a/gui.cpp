@@ -38,6 +38,11 @@ void Button::Clicked()
 	Clicked(GetMousePosition());
 }
 
+void Button::Unload()
+{
+	UnloadTexture(texture);
+}
+
 
 // Ui Tile //
 bool UiTile::Clicked(int x, int y, int size)
