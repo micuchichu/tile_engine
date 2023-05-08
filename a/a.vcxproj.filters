@@ -25,9 +25,6 @@
     <Filter Include="Header Files\tiles">
       <UniqueIdentifier>{7e6d1e47-8166-40e1-ba28-c399cca98eff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="properties">
-      <UniqueIdentifier>{6462c803-81f1-4071-8546-fb004dce6adc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a.cpp">
@@ -95,46 +92,5 @@
     <ClInclude Include="..\..\..\..\..\..\..\raylib\src\raylib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\tileEngine\a\properties\sand.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\spawn.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\stone.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\wood.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\air.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\bagpula.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\cacat.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\dirt.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\gold_ore.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\grass.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\leaves.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\log.txt">
-      <Filter>properties</Filter>
-    </Text>
-    <Text Include="..\..\..\tileEngine\a\properties\player.txt">
-      <Filter>properties</Filter>
-    </Text>
   </ItemGroup>
 </Project>
