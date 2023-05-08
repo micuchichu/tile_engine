@@ -31,6 +31,8 @@ public:
 
 	void Clicked();
 
+	void Unload();
+
 private:
 	Texture2D texture;
 	Vector2 pos;
