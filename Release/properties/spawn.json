@@ -1,0 +1,6 @@
+{
+  "id": 10,
+  "texture_path": "./textures/tiles/spawn.png",
+  "background": false,
+  "size": 1
+}

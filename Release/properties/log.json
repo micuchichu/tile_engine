@@ -1,0 +1,6 @@
+{
+  "id": 6,
+  "texture_path": "./textures/tiles/log.png",
+  "background": true,
+  "size": 1
+}

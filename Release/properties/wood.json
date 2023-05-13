@@ -1,0 +1,6 @@
+{
+  "id": 4,
+  "texture_path": "./textures/tiles/wood.png",
+  "background": false,
+  "size": 1
+}
