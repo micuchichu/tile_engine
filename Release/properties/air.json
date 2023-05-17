@@ -1,0 +1,6 @@
+{
+  "id": 0,
+  "texture_path": "./textures/tiles/air.png",
+  "background": false,
+  "size": 1
+}
