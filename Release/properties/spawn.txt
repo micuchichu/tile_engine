@@ -1,4 +1,0 @@
-10
-./textures/tiles/spawn.png
-0
-1

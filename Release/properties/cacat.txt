@@ -1,4 +1,0 @@
-7
-./textures/tiles/cacat.png
-0
-1

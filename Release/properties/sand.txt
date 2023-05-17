@@ -1,3 +1,0 @@
-9
-./textures/tiles/sand.png
-0

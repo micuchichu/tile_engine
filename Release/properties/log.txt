@@ -1,3 +1,0 @@
-6
-./textures/tiles/log.png
-1
