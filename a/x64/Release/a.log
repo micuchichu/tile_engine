@@ -1,0 +1,82 @@
+﻿  a.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  buttons.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  chunk.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  gui.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\gui.cpp(20,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\gui.cpp(20,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  level.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\level.cpp(206,72): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\level.cpp(206,45): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\level.cpp(209,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  perlin.cpp
+  player.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(61,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(64,27): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(64,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(64,68): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(64,68): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(72,27): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(72,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(72,68): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\player.cpp(72,68): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  mesh.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  tile.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\tile.cpp(64,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\tile.cpp(64,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  utils.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(9,50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(9,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(10,50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(10,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(11,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(11,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(12,48): warning C4244: 'initializing': conversion from 'const int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(12,27): warning C4244: 'initializing': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(183,12): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  world.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\world.cpp(10,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\world.cpp(14,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\world.cpp(16,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\world.cpp(16,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\world.cpp(35,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  editor.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(59,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(135,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(221,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(221,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(231,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(233,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(234,116): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(234,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(234,58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(236,116): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(236,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\editor.cpp(236,58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+LINK : warning LNK4044: unrecognized option '/lstdc++fs'; ignored
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1364 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  a.vcxproj -> C:\Users\nucit\source\repos\micuchichu\tile_engine\x64\Release\a.exe
