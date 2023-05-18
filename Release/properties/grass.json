@@ -1,0 +1,6 @@
+{
+  "id": 3,
+  "texture_path": "./textures/tiles/grass.png",
+  "background": false,
+  "size": 1
+}
