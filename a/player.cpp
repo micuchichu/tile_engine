@@ -58,10 +58,10 @@ void Player::Draw(int frame)
 {
 	if (vel.y < 0)
 	{
-		frame = pos.y / 64;
+		frame = pos.y / 62;
 		if (sgn(vel.y) - 1)
 			frame = texture_jump.width - frame;
-		Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture_jump.height };
+		Rectangle frameR = { 62 * frame, 0, 62 * sgn(vel.x), texture_jump.height };
 
 		DrawTextureRec(texture_jump, frameR, pos, RAYWHITE);
 	}
@@ -69,7 +69,7 @@ void Player::Draw(int frame)
 	{
 		if (sgn(vel.x) - 1)
 			frame = texture_walk.width - frame;
-		Rectangle frameR = { 64 * frame, 0, 64 * sgn(vel.x), texture_walk.height };
+		Rectangle frameR = { 62 * frame, 0, 62 * sgn(vel.x), texture_walk.height };
 
 		DrawTextureRec(texture_walk, frameR, pos, RAYWHITE);
 	}

@@ -3,13 +3,17 @@
 #include "player.h"
 #include "headers.h"
 #include "tile.h"
+#include "mesh.h"
 
 #define KEY_INVALID 163
 
 // Mesh related functions //
-void solveCollision(Player& player, const Tile& tile, float& beneathPlayer);
+void solveCollision(Player& player, const Tile& tile, float& ground);
 
-void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh);
+void CalculateMesh(std::map<int, class Chunk>& tileMap, std::vector<class MeshObj>& mesh, int chunk);
+
+template<typename T>
+T bSearch(T begin, T end, int key);
 
 // Vector2 Related Functions //
 Vector2 mult(Vector2 a, Vector2 b);

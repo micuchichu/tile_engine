@@ -1,7 +1,9 @@
 #include "utils.h"
+#include <map>
+#include "chunk.h"
 
 // Mesh related functions //
-void solveCollision(Player& player, const Tile& tile, float& beneathPlayer)
+void solveCollision(Player& player, const Tile& tile, float& ground)
 {
 	Vector2 squarePos = tile.getPos();
 	const float squareSizeX = Gsize(tile.getIndex()).x;
@@ -15,66 +17,105 @@ void solveCollision(Player& player, const Tile& tile, float& beneathPlayer)
 	float squareBottom = squarePos.y + squareSizeY;
 
 	Vector2 playerPos = player.getPos();
+	Vector2 playerVel = player.getVel();
 
-	if (playerPos.x < squareRight && playerPos.x + playerWidth > squareLeft &&
-		playerPos.y < squareBottom && playerPos.y + playerHeight > squareTop)
+	const float playerRight = playerPos.x + playerWidth;
+	const float playerBottom = playerPos.y + playerHeight;
+
+	if (playerPos.x < squareRight && playerRight > squareLeft &&
+		playerPos.y < squareBottom && playerBottom > squareTop)
 	{
-		float dxLeft = std::abs(squareLeft - (playerPos.x + playerWidth));
-		float dxRight = std::abs(squareRight - playerPos.x);
-		float dyTop = std::abs(squareTop - (playerPos.y + playerHeight));
-		float dyBottom = std::abs(squareBottom - playerPos.y);
+		const float dxLeft = std::abs(squareLeft - playerRight);
+		const float dxRight = std::abs(squareRight - playerPos.x);
+		const float dyTop = std::abs(squareTop - playerBottom);
+		const float dyBottom = std::abs(squareBottom - playerPos.y);
 
-		float minDistance = std::min({ dxLeft, dxRight, dyTop, dyBottom });
+		const float minDistance = std::min({ dxLeft, dxRight, dyTop, dyBottom });
 
 		if (minDistance == dxLeft)
 		{
-			player.setPos({ squareLeft - playerWidth, playerPos.y });
-			player.setVel({ 0, player.getVel().y });
+			playerPos.x = squareLeft - playerWidth;
+			playerVel.x = 0;
 		}
 		else if (minDistance == dxRight)
 		{
-			player.setPos({ squareRight, playerPos.y });
-			player.setVel({ 0, player.getVel().y });
+			playerPos.x = squareRight;
+			playerVel.x = 0;
 		}
 		else if (minDistance == dyTop)
 		{
-			beneathPlayer = squarePos.y - playerHeight;
+			ground = squarePos.y - playerHeight;
+			// tile functions //
+
+			// ajutor //
+			return;
 		}
 		else
 		{
-			player.setPos({ playerPos.x, squareBottom });
-			player.setVel({ player.getVel().x, 0 });
+			playerPos.y = squareBottom;
+			playerVel.y = 0;
 		}
 	}
+
+	player.setPos(playerPos);
+	player.setVel(playerVel);
 }
 
-void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh)
+struct _tile
 {
-	//sort(tileMap.begin(), tileMap.end(), compareTiles);
-	mesh.clear();
+	_tile(Tile t, int c, int i)
+		: tile(t), chunk(c), index(i) {}
 
-	for (const auto& tile : tileMap)
+	Tile tile;
+	int chunk;
+	int index;
+};
+
+void CalculateMesh(std::map<int, Chunk>& tileMap, std::vector<MeshObj>& mesh, int chunk)
+{
+	mesh.clear();
+	//mesh.reserve(tileMap[chunk].getChunk().size());
+
+	// chunk //
+	std::vector<_tile> newMap;
+	/*newMap.reserve(tileMap[chunk].size());*/
+
+	// current chunk //
+	if (tileMap[chunk].size())
+		for(int i = 0; i < tileMap[chunk].size(); i++)
+			newMap.push_back({tileMap[chunk].getChunk()[i], chunk, i });
+
+	// right strip //
+	if(tileMap[chunk + 1].size())
+		for (int i = 0; i < tileMap[chunk + 1].size() - tileMap[chunk + 1].middleCol(); i++)
+			newMap.push_back(_tile{ tileMap[chunk + 1].getChunk()[i], chunk + 1, i });
+
+	// left strip //
+	if (tileMap[chunk - 1].size())
+		for (int i = tileMap[chunk - 1].middleCol() - 1; i < tileMap[chunk - 1].size(); i++)
+			newMap.push_back(_tile{ tileMap[chunk - 1].getChunk()[i], chunk - 1, i });
+
+	for (const auto& tile : newMap)
 	{
-		if (tile.back())
+		if (tile.tile.back())
 			continue;
 
-		Vector2 pos1 = tile.getPos();
+		const Vector2& pos1 = tile.tile.getPos();
+		const vec2i size = Gsize(tile.tile.getIndex());
 
-		vec2i size = Gsize(tile.getIndex());
-
-		float xp = pos1.x + size.x;
-		float xm = pos1.x - size.x;
-		float yp = pos1.y + size.y;
-		float ym = pos1.y - size.y;
+		const float xp = pos1.x + size.x;
+		const float xm = pos1.x - size.x;
+		const float yp = pos1.y + size.y;
+		const float ym = pos1.y - size.y;
 
 		int adjacent = 0;
-
-		for (const auto& tile2 : tileMap)
+		
+		for (const auto& tile2 : newMap)
 		{
-			if (tile2.back())
+			if (tile2.tile.back())
 				continue;
 
-			Vector2 pos2 = tile2.getPos();
+			const Vector2& pos2 = tile2.tile.getPos();
 
 			if ((pos2.x == pos1.x && pos2.y == ym) ||
 				(pos2.x == xp && pos2.y == pos1.y) ||
@@ -87,9 +128,34 @@ void CalculateMesh(std::vector<Tile> tileMap, std::vector<Tile>& mesh)
 			if (adjacent == 4)
 				break;
 		}
+
 		if (adjacent < 4)
-			mesh.push_back(tile);
+			mesh.push_back(MeshObj{ tile.tile, tile.index, tile.chunk });
 	}
+}
+
+
+template<typename T>
+T bSearch(T begin, T end, int key)
+{
+	T lower = begin;
+	T upper = end;
+	while (lower < upper)
+	{
+		T mid = lower + std::distance(upper, lower) / 2;
+		if (key == *mid)
+		{
+			return mid;
+		}
+		if (key < *mid) {
+			upper = mid;
+		}
+		else {
+			lower = mid;
+		}
+	}
+
+	return end;
 }
 
 // Vector2 Related Functions //
@@ -115,10 +181,7 @@ float length(Vector2 a)
 
 float sgn(float n)
 {
-	if (n < 0)
-		return -1;
-	else
-		return 1;
+	return (n < 0) ? -1 : 1;
 }
 
 Vector2 norm(Vector2 a)
@@ -151,6 +214,8 @@ bool compareVectors(const Vector2& a, const Vector2& b) {
 
 void Window()
 {
+	Image icon = LoadImage("./textures/icon.png");
+	SetWindowIcon(icon);
 	SetWindowState(FLAG_WINDOW_RESIZABLE);
 	InitWindow(600, 600, "gam");
 	SetExitKey(KEY_INVALID);

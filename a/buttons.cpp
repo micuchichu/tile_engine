@@ -13,32 +13,21 @@ void Export(std::vector<Tile>& tiles)
 				}
 		}
 
-		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << std::endl;
+		file << tiles[i].getIndex() << " " << tiles[i].getPos().x << " " << tiles[i].getPos().y << " ";
 	}
 }
 
 void Import(std::vector<Tile>& tiles)
 {
-	std::ifstream file("./saves/save.txt");
 	tiles.clear();
+	std::ifstream file("./saves/save.txt");
 
-	while (!file.eof())
+	int index, x, y;
+
+	while (file >> index >> x >> y)
 	{
-		int index, x, y;
-		file >> index >> x >> y;
 		Tile tile(index, Vector2{ (float)x, (float)y });
 		tiles.push_back(tile);
-	}
-
-	for (int i = 0; i < tiles.size(); i++)
-	{
-		for (int j = 0; j < tiles.size(); j++)
-		{
-			if (i != j)
-				if (tiles[i].getPos().x == tiles[j].getPos().x && tiles[i].getPos().y == tiles[j].getPos().y) {
-					tiles.erase(tiles.begin() + j);
-				}
-		}
 	}
 }
 

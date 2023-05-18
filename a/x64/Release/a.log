@@ -1,19 +1,19 @@
-﻿  player.cpp
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\textures.h(50,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\textures.h(51,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(61,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(64,27): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(64,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(64,68): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(64,68): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(72,27): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(72,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(72,68): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(72,68): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+﻿  utils.cpp
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(55,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\textures.h(56,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(9,50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(9,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(10,50): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(10,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(11,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(11,26): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(12,48): warning C4244: 'initializing': conversion from 'const int' to 'float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(12,27): warning C4244: 'initializing': conversion from 'const int' to 'const float', possible loss of data
+C:\Users\nucit\source\repos\micuchichu\tile_engine\a\utils.cpp(184,12): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 LINK : warning LNK4044: unrecognized option '/lstdc++fs'; ignored
   Generating code
-  3 of 1150 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  2 of 1364 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  a.vcxproj -> C:\Users\ichb\source\repos\micuchichu\tile_engine\x64\Release\a.exe
+  a.vcxproj -> C:\Users\nucit\source\repos\micuchichu\tile_engine\x64\Release\a.exe

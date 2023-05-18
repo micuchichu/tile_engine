@@ -9,6 +9,11 @@ struct vec2i
 {
     int x, y;
 
+    Vector2 vec()
+    {
+        return Vector2{ (float)x, (float)y };
+    }
+
     vec2i operator * (float n) { return { (int)(x * n), (int)(y * n) }; }
 };
 

@@ -10,6 +10,8 @@ public:
 		: texture_index(index), pos(pos)
 	{}
 
+	bool Clicked(Vector2 MousePos);
+
 	bool Clicked(int sizeX, int sizeY, Vector2 MousePos);
 
 	bool Clicked(int sizeX, int sizeY, Vector2 MousePos, bool& mouseOver);

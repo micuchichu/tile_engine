@@ -1,4 +1,4 @@
-#include "modes.h"
+#include "mainHeaders.h"
 
 Textures textures;
 
@@ -16,6 +16,9 @@ int main()
 	}
 	else
 	{
+		int seed;
+		std::cin >> seed;
+		permutations(seed);
 		Level level;
 		level.Run();
 	}

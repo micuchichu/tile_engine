@@ -1,6 +1,14 @@
 #include "tile.h"
 
 // Check If Clicked //
+bool Tile::Clicked(Vector2 MousePos)
+{
+	if (MousePos.x < pos.x + Gsize(texture_index).x && MousePos.x > pos.x
+		&& MousePos.y < pos.y + Gsize(texture_index).y && MousePos.y > pos.y)
+		return IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+	return false;
+}
+
 bool Tile::Clicked(int sizeX, int sizeY, Vector2 MousePos)
 {
 	if (MousePos.x < pos.x + sizeX && MousePos.x > pos.x

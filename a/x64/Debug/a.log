@@ -1,8 +1,0 @@
-﻿  player.cpp
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(77,26): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(77,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(77,62): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(77,62): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\ichb\source\repos\micuchichu\tile_engine\a\player.cpp(79,14): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-LINK : warning LNK4044: unrecognized option '/lstdc++fs'; ignored
-  a.vcxproj -> C:\Users\ichb\source\repos\micuchichu\tile_engine\x64\Debug\a.exe
