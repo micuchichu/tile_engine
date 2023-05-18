@@ -1,4 +1,5 @@
-#include "mainHeaders.h"
+#include "editor.h"
+#include "level.h"
 
 Textures textures;
 

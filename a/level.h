@@ -30,6 +30,8 @@ public:
 
 	void KeysPressed();
 
+	void Place();
+
 	void SolveCollisions();
 
 	void Gravity();
@@ -41,14 +43,20 @@ private:
 	int screenH;
 
 	int chunk;
+	int farthestChunkPos;
+	int farthestChunkNeg;
+	int previousChunk;
 
 	bool pause;
+	bool loaded;
 
 	float ground;
 	float dt;
 
 	Player player;
 	Vector2 spawn;
+
+	Vector2 mousePos;
 
 	Button buttons[1];
 

@@ -21,6 +21,12 @@ void Level::InitVariables()
 	screenW = GetScreenWidth();
 	screenH = GetScreenHeight();
 	pause = true;
+
+	farthestChunkPos = 0;
+	farthestChunkNeg = 0;
+
+	loaded = false;
+	previousChunk = -1;
 }
 
 void Level::InitPlayer()
@@ -57,14 +63,6 @@ void Level::InitButtons()
 
 void Level::Run()
 {
-	int farthestChunkPos = 0;
-	int farthestChunkNeg = 0;
-
-	Vector2 mousePos = GetScreenToWorld2D(GetMousePosition(), player.getCam());
-
-	bool loaded = false;
-	int previousChunk = -1;
-
 	while (!WindowShouldClose())
 	{
 		// Delta Time //
@@ -105,12 +103,15 @@ void Level::Run()
 			for (int i = 0; i < mesh.size(); i++)
 			{
 				if (mesh[i].tile().Clicked(mousePos))
-				{
-					world[mesh[i].chunk()].erase(world[mesh[i].chunk()].begin() + mesh[i].chunkIndex());
-					CalculateMesh(world, mesh, chunk);
-				}
+					if (Distance(mousePos, player.getPos()) < 640)
+					{
+						world[mesh[i].chunk()].erase(world[mesh[i].chunk()].begin() + mesh[i].chunkIndex());
+						CalculateMesh(world, mesh, chunk);
+					}
 			}
 
+			Place();
+				
 			SolveCollisions();
 
 			Gravity();
@@ -160,6 +161,31 @@ void Level::KeysPressed()
 	// Frames //
 	if (IsKeyPressed('F'))
 		std::cout << GetFPS() << std::endl;
+}
+
+void Level::Place()
+{
+	float d = Distance(mousePos, player.getPos());
+	if (d > 128 && d < 640)
+	{
+		if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+		{
+			int xPlace = (float)((int)(mousePos.x / Gtexture(4).width) * Gtexture(4).width);
+			int yPlace = (float)((int)(mousePos.y / Gtexture(4).height) * Gtexture(4).height);
+
+			if (mousePos.x < 0)
+				xPlace -= textures.tiles[4].texture.width;
+			if (mousePos.y < 0)
+				yPlace -= textures.tiles[4].texture.height;
+
+			for (int i = 0; i < mesh.size(); i++)
+				if (xPlace == mesh[i].tile().getPos().x && yPlace == mesh[i].tile().getPos().y)
+					return;
+
+			world[chunk].push_back({ 4, Vector2{(float)xPlace, (float)yPlace} });
+			mesh.push_back({ { 4, Vector2{(float)xPlace, (float)yPlace} }, (int)mesh.size(), chunk });
+		}
+	}
 }
 
 void Level::SolveCollisions()
