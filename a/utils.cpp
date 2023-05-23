@@ -11,22 +11,23 @@ void solveCollision(Player& player, const Tile& tile, float& ground)
 	const float playerWidth = player.getWidth();
 	const float playerHeight = player.getTexture().height;
 
-	float squareLeft = squarePos.x;
-	float squareRight = squarePos.x + squareSizeX;
+	float squareLeft = squarePos.x - 30;
+	float squareRight = squarePos.x + squareSizeX + 30;
 	float squareTop = squarePos.y;
 	float squareBottom = squarePos.y + squareSizeY;
 
 	Vector2 playerPos = player.getPos();
 	Vector2 playerVel = player.getVel();
 
-	const float playerRight = playerPos.x + playerWidth;
+	const float playerRight = playerPos.x;
+	const float playerLeft = playerPos.x;
 	const float playerBottom = playerPos.y + playerHeight;
 
 	if (playerPos.x < squareRight && playerRight > squareLeft &&
 		playerPos.y < squareBottom && playerBottom > squareTop)
 	{
 		const float dxLeft = std::abs(squareLeft - playerRight);
-		const float dxRight = std::abs(squareRight - playerPos.x);
+		const float dxRight = std::abs(squareRight - playerLeft);
 		const float dyTop = std::abs(squareTop - playerBottom);
 		const float dyBottom = std::abs(squareBottom - playerPos.y);
 
@@ -34,7 +35,7 @@ void solveCollision(Player& player, const Tile& tile, float& ground)
 
 		if (minDistance == dxLeft)
 		{
-			playerPos.x = squareLeft - playerWidth;
+			playerPos.x = squareLeft;
 			playerVel.x = 0;
 		}
 		else if (minDistance == dxRight)
@@ -100,7 +101,7 @@ void CalculateMesh(std::map<int, Chunk>& tileMap, std::vector<MeshObj>& mesh, in
 		if (tile.tile.back())
 			continue;
 
-		const Vector2& pos1 = tile.tile.getPos();
+		const Vector2& pos1 = tile.tile.getPos();  
 		const vec2i size = Gsize(tile.tile.getIndex());
 
 		const float xp = pos1.x + size.x;
@@ -214,7 +215,8 @@ bool compareVectors(const Vector2& a, const Vector2& b) {
 
 void Window()
 {
-	Image icon = LoadImage("./textures/icon.png");
+	SetTargetFPS(120);
+	Image icon = LoadImage("./textures/icon(2).png");
 	SetWindowIcon(icon);
 	SetWindowState(FLAG_WINDOW_RESIZABLE);
 	InitWindow(600, 600, "gam");

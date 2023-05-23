@@ -136,6 +136,7 @@ void Level::WindowUpdate()
 		screenW = GetScreenWidth();
 		screenH = GetScreenHeight();
 		player.setCamOffset({ (float)screenW / 2, (float)screenH / 2 });
+		player.setCamZoom(screenW / 1240);
 	}
 }
 

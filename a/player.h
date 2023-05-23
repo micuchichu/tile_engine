@@ -30,6 +30,7 @@ public:
 	void setVel(Vector2 vel);
 
 	void setCamOffset(Vector2 offset);
+	void setCamZoom(float zoom);
 
 	void initTexture();
 

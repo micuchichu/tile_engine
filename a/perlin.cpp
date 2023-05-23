@@ -4,9 +4,9 @@ void permutations(int seed)
 {
     srand(seed);
 
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < PERMS; i++)
     {
-        p[i] = rand() % 256;
+        p[i] = rand() % PERMS;
     }
 }
 
@@ -30,9 +30,9 @@ float grad(int hash, float x, float y, float z)
 
 float noise(float x, float y, float z) 
 {
-    int X = (int)floor(x) & 255;
-    int Y = (int)floor(y) & 255;
-    int Z = (int)floor(z) & 255;
+    int X = (int)floor(x) & (PERMS - 1);
+    int Y = (int)floor(y) & (PERMS - 1);
+    int Z = (int)floor(z) & (PERMS - 1);
 
     x -= floor(x);
     y -= floor(y);
@@ -42,12 +42,12 @@ float noise(float x, float y, float z)
     float v = fade(y);
     float w = fade(z);
 
-    int A = p[X % 256] + Y;
-    int AA = p[A % 256] + Z;
-    int AB = p[(A + 1) % 256] + Z;
-    int B = p[(X + 1) % 256] + Y;
-    int BA = p[B % 256] + Z;
-    int BB = p[(B + 1) % 256] + Z;
+    int A = p[X % PERMS] + Y;
+    int AA = p[A % PERMS] + Z;
+    int AB = p[(A + 1) % PERMS] + Z;
+    int B = p[(X + 1) % PERMS] + Y;
+    int BA = p[B % PERMS] + Z;
+    int BB = p[(B + 1) % PERMS] + Z;
 
     return lerp(w,
         lerp(v,
